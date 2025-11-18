@@ -1,3 +1,3 @@
-actor OpenD {
+persistent actor OpenD {
  
 };
