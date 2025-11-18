@@ -1,2 +1,7 @@
-service : {
-}
+type NFT = 
+ service {
+   getAsset: () -> (vec nat8);
+   getName: () -> (text);
+   getOwner: () -> (text);
+ };
+service : (text, text, vec nat8) -> NFT
