@@ -1,5 +1,5 @@
 import Debug "mo:base/Debug";
-persistent actor NFT {
+actor NFT {
     Debug.print("It works!");
 	
 };
