@@ -3,10 +3,7 @@ import Principal "mo:base/Principal";
 import NFTActorClass "../NFT/nft";
 import Debug "mo:base/Debug";
 import List "mo:base/List";
-import List "mo:base/List";
 import HashMap "mo:base/HashMap";
-import NFTActorClass "../NFT/nft";
-import List "mo:base/List";
 
 
 actor OpenD {

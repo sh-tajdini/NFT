@@ -8,7 +8,7 @@ function Item(props) {
   const [name, setName] = React.useState();
   const [owner, setOwner] = React.useState();
   const [image, setImage] = React.useState();
-  const id = Principal.fromText(props.id);
+  const id = props.id;
   // talk to the local replica (dfx) not the webpack dev server
   const localHost = "http://localhost:8000/";
   const agent = new HttpAgent({ host: localHost });

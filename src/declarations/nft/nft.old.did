@@ -1,5 +1,6 @@
 service : {
   getAsset: () -> (vec nat8);
+  getCanisterID: () -> (principal) query;
   getName: () -> (text);
   getOwner: () -> (principal);
 }
