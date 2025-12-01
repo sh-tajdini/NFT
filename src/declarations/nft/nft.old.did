@@ -1,2 +1,5 @@
 service : {
+  getAsset: () -> (vec nat8);
+  getName: () -> (text);
+  getOwner: () -> (principal);
 }

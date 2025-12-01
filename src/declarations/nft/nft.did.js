@@ -1,6 +1,7 @@
 export const idlFactory = ({ IDL }) => {
   const NFT = IDL.Service({
     'getAsset' : IDL.Func([], [IDL.Vec(IDL.Nat8)], []),
+    'getCanisterID' : IDL.Func([], [IDL.Principal], ['query']),
     'getName' : IDL.Func([], [IDL.Text], []),
     'getOwner' : IDL.Func([], [IDL.Principal], []),
   });
