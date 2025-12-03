@@ -3,4 +3,5 @@ service : {
   getCanisterID: () -> (principal) query;
   getName: () -> (text);
   getOwner: () -> (principal);
+  transferOwnership: (principal) -> (text);
 }

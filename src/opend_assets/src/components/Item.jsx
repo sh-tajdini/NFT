@@ -12,6 +12,7 @@ function Item(props) {
   const [image, setImage] = React.useState();
   const [button, setButton] = React.useState();
   const [priceInput, setPriceInput] = React.useState();
+  const NFTActorRef = React.useRef();
   const id = props.id;
   // talk to the local replica (dfx) not the webpack dev server
   const localHost = "http://localhost:8000/";
@@ -61,6 +62,7 @@ function Item(props) {
     setName(name);
     setOwner(owner);
     setImage(imageUrl);
+    NFTActorRef.current = NFTActor;
     setButton(<Button handleClick={handleSell} text={"Sell"} />);
   }
   useEffect(() => {
@@ -84,10 +86,13 @@ function Item(props) {
   async function sellItem() {
     console.log("set price =" + price);
     const listingResult = await opend.listItem(props.id, Number(price));
-    console.log("listingResult =" + listingResult);
-    if (listingResult == "Success") {
+    console.log("listingResult =", listingResult);
+    console.log("NFTActor =", NFTActorRef.current);
+    if (listingResult && NFTActorRef.current) {
       const openDId = await opend.getOpenDCanisterID();
-      const transferResult = await NFTActor.transferOwnership(openDId);
+      const transferResult = await NFTActorRef.current.transferOwnership(
+        openDId
+      );
       console.log("transferResult =" + transferResult);
     }
   }
