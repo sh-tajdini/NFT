@@ -82,5 +82,12 @@ public query func getListedNFTS() : async [Principal] {
             return true;
        }
         };  
+    public query func getOriginalOwner(id:Principal) : async ?Principal {
+        var listing:?Listing = mapOfListing.get(id);
+        switch (listing){
+            case null return null;
+            case (?result) return ?result.itemOwner;
+        };
+    };
 
 };

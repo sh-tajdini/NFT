@@ -5,6 +5,7 @@ import { idlFactory } from "../../../declarations/nft/nft.did.js";
 import { Principal } from "@dfinity/principal";
 import Button from "./‌Button";
 import { opend } from "../../../declarations/opend/index";
+import CURRENT_USER_ID from "../index";
 
 function Item(props) {
   const [name, setName] = React.useState();
@@ -100,8 +101,19 @@ function Item(props) {
 
     // If rendering in the discover view, show Buy button and do NOT blur images
     if (props.role === "discover") {
-      setBlur(undefined);
-      setButton(<Button handleClick={handleBuy} text={"Buy"} />);
+      const originalOwner = await opend.getOriginalOwner(props.id);
+      if (originalOwner && originalOwner.length > 0) {
+        const ownerPrincipal = originalOwner[0];
+        if (
+          principalToText(ownerPrincipal) !== principalToText(CURRENT_USER_ID)
+        ) {
+          setBlur(undefined);
+          setButton(<Button handleClick={handleBuy} text={"Buy"} />);
+        }
+      } else {
+        setBlur(undefined);
+        setButton(<Button handleClick={handleBuy} text={"Buy"} />);
+      }
     } else {
       if (nftIsListed) {
         setOwner("OpenD");
