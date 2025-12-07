@@ -4,6 +4,7 @@ import NFTActorClass "../NFT/nft";
 import Debug "mo:base/Debug";
 import List "mo:base/List";
 import HashMap "mo:base/HashMap";
+import Iter "mo:base/Iter";
 
 
 actor OpenD {
@@ -46,8 +47,13 @@ actor OpenD {
         return List.toArray(userNFTs);
     };
 
+public query func getListedNFTS() : async [Principal] {
+    let ids = Iter.toArray(mapOfListing.keys());
+    return ids;
+    };
+
     public shared (msg) func listItem(id:Principal,price: Nat):async Text{
- var item:NFTActorClass.NFT = switch (mapOfNFTs.get(id)){
+        var item:NFTActorClass.NFT = switch (mapOfNFTs.get(id)){
             case null return "NFT does not exist";
             case (?result) result;
         };
@@ -67,5 +73,14 @@ actor OpenD {
 
     public query func getOpenDCanisterID() : async Principal {
         return Principal.fromActor(OpenD);
-    };        
+    };   
+
+    public query func isListed(id:Principal) : async Bool {
+       if (mapOfListing.get(id) == null){
+            return false;
+       }else{
+            return true;
+       }
+        };  
+
 };
