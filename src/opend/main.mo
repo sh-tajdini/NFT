@@ -89,5 +89,11 @@ public query func getListedNFTS() : async [Principal] {
             case (?result) return ?result.itemOwner;
         };
     };
-
+    public query func getListedNFTPrice(id:Principal) : async ?Nat {
+        var listing:?Listing = mapOfListing.get(id);
+        switch (listing) {
+            case null return null;
+            case (?result) return ?result.itemPrice;
+        };
+    };
 };

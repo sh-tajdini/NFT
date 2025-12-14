@@ -1,4 +1,5 @@
 service : {
+  getListedNFTPrice: (principal) -> (opt nat) query;
   getListedNFTS: () -> (vec principal) query;
   getOpenDCanisterID: () -> (principal) query;
   getOriginalOwner: (principal) -> (opt principal) query;

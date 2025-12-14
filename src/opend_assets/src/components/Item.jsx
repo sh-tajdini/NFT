@@ -6,6 +6,7 @@ import { Principal } from "@dfinity/principal";
 import Button from "./‌Button";
 import { opend } from "../../../declarations/opend/index";
 import CURRENT_USER_ID from "../index";
+import PriceLabel from "./PriceLabel";
 
 function Item(props) {
   const [name, setName] = React.useState();
@@ -16,6 +17,7 @@ function Item(props) {
   const [loaderHidden, setLoaderHidden] = React.useState(true);
   const [blur, setBlur] = React.useState();
   const [sellStatus, setSellStatus] = React.useState();
+  const [priceLabel, setPriceLabel] = React.useState();
   const NFTActorRef = React.useRef();
   const id = props.id;
   function principalToText(p) {
@@ -114,6 +116,23 @@ function Item(props) {
         setBlur(undefined);
         setButton(<Button handleClick={handleBuy} text={"Buy"} />);
       }
+      const priceResult = await opend.getListedNFTPrice(props.id);
+      let priceValue = null;
+      if (priceResult && Array.isArray(priceResult) && priceResult.length > 0) {
+        // candid optional comes back as [value]
+        const raw = priceResult[0];
+        try {
+          // raw may be a bigint
+          priceValue = typeof raw === "bigint" ? Number(raw) : raw;
+        } catch (e) {
+          priceValue = raw;
+        }
+      }
+      if (priceValue != null) {
+        setPriceLabel(<PriceLabel sellPrice={priceValue} />);
+      } else {
+        setPriceLabel(null);
+      }
     } else {
       if (nftIsListed) {
         setOwner("OpenD");
@@ -210,6 +229,7 @@ function Item(props) {
           <div></div>
         </div>
         <div className="disCardContent-root">
+          {priceLabel}
           <h2 className="disTypography-root makeStyles-bodyText-24 disTypography-h5 disTypography-gutterBottom">
             {name}
             <span className="purple-text"> {sellStatus}</span>
